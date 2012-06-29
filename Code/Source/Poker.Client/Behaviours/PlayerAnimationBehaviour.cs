@@ -28,8 +28,6 @@ namespace Poker.Client.Behaviours
                     isDelaying      = true;
                     delay           = MinDelayBetweenAnimations + (float) random.NextDouble()*(MaxDelayBetweenAnimations - MinDelayBetweenAnimations);
                     currentDelay    = 0.0f;
-
-                    Debug.Log(string.Format("{0} - Delay: {1} seconds",this.name,delay));
                 }
                 else
                 {

@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NSpeex">
+      <HintPath>..\..\Lib\NSpeex\NSpeex.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="UnityEngine">
@@ -39,7 +42,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio\AudioEncoderBase.cs" />
+    <Compile Include="Audio\AudioInputDeviceDescription.cs" />
+    <Compile Include="Audio\AudioInputRecorder.cs" />
+    <Compile Include="Audio\IAudioEncoder.cs" />
+    <Compile Include="Audio\SpeexAudioEncoder.cs" />
+    <Compile Include="Audio\WavAudioEncoder.cs" />
     <Compile Include="Behaviours\PlayerAnimationBehaviour.cs" />
+    <Compile Include="Behaviours\PlayerVoiceInputBehaviour.cs" />
+    <Compile Include="Conversion\ArrayConverters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
