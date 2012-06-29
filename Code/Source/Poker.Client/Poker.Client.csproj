@@ -43,8 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio\AudioEncoderBase.cs" />
+    <Compile Include="Audio\AudioFrameBuffer.cs" />
     <Compile Include="Audio\AudioInputDeviceDescription.cs" />
     <Compile Include="Audio\AudioInputRecorder.cs" />
+    <Compile Include="Audio\IAudioDecoder.cs" />
     <Compile Include="Audio\IAudioEncoder.cs" />
     <Compile Include="Audio\SpeexAudioEncoder.cs" />
     <Compile Include="Audio\WavAudioEncoder.cs" />

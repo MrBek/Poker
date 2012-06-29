@@ -14,6 +14,7 @@ namespace Poker.Client.Audio
         private SpeexEncoder        speexEncoder;
         private OggSpeexWriter      oggWriter;
         private Stream              targetStream;
+        private AudioFrameBuffer    audioFrameBuffer;
 
         private short[] shortBuffer;
         private byte[]  byteBuffer;
@@ -22,6 +23,10 @@ namespace Poker.Client.Audio
         {
             this.targetStream   = targetStream;
             speexEncoder        = new SpeexEncoder(bandMode) { Quality = quality,VBR = isVbr};
+
+            Debug.Log("FrameSize: " + speexEncoder.FrameSize);
+
+            audioFrameBuffer = new AudioFrameBuffer(speexEncoder.FrameSize,1,WriteCore);
 
             if ( encodeOgg )
             {
@@ -33,33 +38,35 @@ namespace Poker.Client.Audio
 
         public void Close()
         {
+            audioFrameBuffer.Dispose();
+
             if ( encodeOgg )
             {
                 oggWriter.Close();
             }
         }
 
-        public void Write(float[] samples,int count)
+        public void Write(float[] input,int count)
         {
-            Debug.Log("Samples: " + count);
+            audioFrameBuffer.Insert(input,count);
+        }
+
+        private void WriteCore(float[] samples,int count)
+        {
             if (shortBuffer == null || shortBuffer.Length < count)
             {
                 shortBuffer = new short[count];
             }
 
-            if (byteBuffer == null || byteBuffer.Length < count * 4)
+            if (byteBuffer == null || byteBuffer.Length < count * 2)
             {
-                byteBuffer = new byte[count * 4];
+                byteBuffer = new byte[count * 2];
             }
 
-            Debug.Log("ShortBuffer: " + shortBuffer.Length);
-            Debug.Log("ByteBuffer: " + byteBuffer.Length);
-
             ArrayConverters.FloatToShort(samples,count,shortBuffer);
-
             var bytesEncoded = speexEncoder.Encode(shortBuffer, 0, count, byteBuffer, 0, byteBuffer.Length);
 
-            Debug.Log("BytesEncoded: " + bytesEncoded);
+            Debug.Log("Encoded: " + bytesEncoded);
 
             if ( encodeOgg )
             {
