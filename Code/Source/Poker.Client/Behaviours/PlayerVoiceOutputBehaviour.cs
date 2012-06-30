@@ -31,7 +31,7 @@ namespace Poker.Client.Behaviours
                             var currentAudioClip = audio.clip;
                             if ( currentAudioClip != null )
                             {
-                                delayInSeconds = currentAudioClip.samples/(float)sampleFrequency;
+                                delayInSeconds = currentAudioClip.samples/(float)sampleFrequency;   
                             }
 
                             audio.clip = AudioClip.Create("VoiceOutput", decoderBuffer.Count, 1, sampleFrequency, true, false);
@@ -44,7 +44,7 @@ namespace Poker.Client.Behaviours
 
                                 if (maxVolume > SpeechVolumneThreshold)
                                 {
-                                    playerAnimationBehaviour.StartSpeechAnimation(delayInSeconds);
+                                    playerAnimationBehaviour.StartSpeechAnimation(0.0f);
                                 }
                                 else
                                 {

@@ -54,7 +54,7 @@ namespace Poker.Client.Animation
 
             foreach( var entry in entries.ToArray())
             {
-                if ( entry.StartTime >= currentTime )
+                if ( entry.StartTime <= currentTime )
                 {
                     entries.Remove(entry);
 

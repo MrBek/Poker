@@ -1,4 +1,5 @@
 ﻿using System;
+using Poker.Client.Animation;
 using UnityEngine;
 
 namespace Poker.Client.Behaviours
@@ -8,7 +9,8 @@ namespace Poker.Client.Behaviours
         public float MinDelayBetweenAnimations = 1.0f;
         public float MaxDelayBetweenAnimations = 5.0f;
 
-        private System.Random random;
+        private System.Random   random;
+        private AnimationQueue  animationQueue;
 
         private float   currentDelay;
         private float   delay;
@@ -17,17 +19,23 @@ namespace Poker.Client.Behaviours
         public void Awake()
         {
             random = new System.Random(name.GetHashCode());
-            animation.Play("SittingIdle");
+            animationQueue = new AnimationQueue(animation,(animationName,length) =>
+            {
+                if ( animationName == "SittingIdle")
+                {
+                    var delay = MinDelayBetweenAnimations + (float)random.NextDouble() * (MaxDelayBetweenAnimations - MinDelayBetweenAnimations);
+                    Debug.Log(string.Format("Play idle for {0} in {1}",name,delay + length));
+                    animationQueue.Enqueue("SittingIdle",delay + length,AnimationPlayMode.Mix,0.5f,false);
+                }
+            }); 
+        
+            animationQueue.Enqueue("SittingIdle",0.0f,AnimationPlayMode.Mix,0.5f);
         }
 
         public void StartSpeechAnimation(float delayInSeconds)
         {
             Debug.Log("Speech triggered");
-
-            if ( !animation.IsPlaying("SittingTalking"))
-            {
-                animation.Blend("SittingTalking");
-            }
+            animationQueue.Enqueue("SittingTalking",delayInSeconds,AnimationPlayMode.Mix,0.5f);
         }
 
         public void StopSpeechAnimation()
@@ -35,31 +43,12 @@ namespace Poker.Client.Behaviours
             if ( animation.IsPlaying("SittingTalking"))
             {
                 animation.Stop("SittingTalking");
-                animation.Play("SittingIdle", AnimationPlayMode.Mix);
             }
         }
 
         public void Update()
         {
-            if ( !animation.IsPlaying("SittingIdle") )
-            {
-                if (!isDelaying)
-                {
-                    isDelaying      = true;
-                    delay           = MinDelayBetweenAnimations + (float) random.NextDouble()*(MaxDelayBetweenAnimations - MinDelayBetweenAnimations);
-                    currentDelay    = 0.0f;
-                }
-                else
-                {
-                    currentDelay += Time.deltaTime;
-
-                    if ( currentDelay > delay )
-                    {
-                        animation.Play("SittingIdle",AnimationPlayMode.Mix);
-                        isDelaying = false;
-                    }
-                }
-            }
+            animationQueue.Update();
         }
     }
 }
