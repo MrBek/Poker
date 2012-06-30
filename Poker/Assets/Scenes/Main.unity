@@ -1151,10 +1151,10 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 5fef46e3921c40d09a6af407d55f5898, type: 2}
   m_Animations:
-  - {fileID: 0}
   - {fileID: 7400000, guid: 5fef46e3921c40d09a6af407d55f5898, type: 2}
+  - {fileID: 7400000, guid: 3de25446e34e4587995c5bcae96fc0db, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 1
   m_UserAABB:
@@ -1182,6 +1182,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 1289997562, guid: 0c125e06fcc9d6948bd72a8324c9b145, type: 1}
   m_Name: 
+  SpeechVolumneThreshold: .300000012
 --- !u!82 &381574927
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4196,12 +4197,20 @@ Prefab:
       objectReference: {fileID: 7400000, guid: 5fef46e3921c40d09a6af407d55f5898, type: 2}
     - target: {fileID: 11100000, guid: d22c6018a8c27ba40a99183394ebc4c4, type: 3}
       propertyPath: m_Animations.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11100000, guid: d22c6018a8c27ba40a99183394ebc4c4, type: 3}
       propertyPath: m_Animations.Array.data[0]
       value: 
       objectReference: {fileID: 7400000, guid: 5fef46e3921c40d09a6af407d55f5898, type: 2}
+    - target: {fileID: 11100000, guid: d22c6018a8c27ba40a99183394ebc4c4, type: 3}
+      propertyPath: m_Animations.Array.data[1]
+      value: 
+      objectReference: {fileID: 7400000, guid: 3de25446e34e4587995c5bcae96fc0db, type: 2}
+    - target: {fileID: 11100000, guid: d22c6018a8c27ba40a99183394ebc4c4, type: 3}
+      propertyPath: m_PlayAutomatically
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d22c6018a8c27ba40a99183394ebc4c4, type: 3}
   m_RootGameObject: {fileID: 1275557803}
@@ -4729,12 +4738,20 @@ Prefab:
       objectReference: {fileID: 7400000, guid: 5fef46e3921c40d09a6af407d55f5898, type: 2}
     - target: {fileID: 11100000, guid: 86bb10e9b2f91644d9f697f5d6603919, type: 3}
       propertyPath: m_Animations.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11100000, guid: 86bb10e9b2f91644d9f697f5d6603919, type: 3}
       propertyPath: m_Animations.Array.data[0]
       value: 
       objectReference: {fileID: 7400000, guid: 5fef46e3921c40d09a6af407d55f5898, type: 2}
+    - target: {fileID: 11100000, guid: 86bb10e9b2f91644d9f697f5d6603919, type: 3}
+      propertyPath: m_Animations.Array.data[1]
+      value: 
+      objectReference: {fileID: 7400000, guid: 3de25446e34e4587995c5bcae96fc0db, type: 2}
+    - target: {fileID: 11100000, guid: 86bb10e9b2f91644d9f697f5d6603919, type: 3}
+      propertyPath: m_PlayAutomatically
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 86bb10e9b2f91644d9f697f5d6603919, type: 3}
   m_RootGameObject: {fileID: 1792964339}
@@ -4787,8 +4804,9 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 5fef46e3921c40d09a6af407d55f5898, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 5fef46e3921c40d09a6af407d55f5898, type: 2}
+  - {fileID: 7400000, guid: 3de25446e34e4587995c5bcae96fc0db, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 1
   m_UserAABB:
@@ -4816,6 +4834,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 1289997562, guid: 0c125e06fcc9d6948bd72a8324c9b145, type: 1}
   m_Name: 
+  SpeechVolumneThreshold: .300000012
 --- !u!82 &1275557808
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5927,15 +5946,19 @@ Prefab:
     - target: {fileID: 11100000, guid: 014dd983c047b9e439e3151e0eee3133, type: 3}
       propertyPath: m_Animations.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7400000, guid: 5fef46e3921c40d09a6af407d55f5898, type: 2}
     - target: {fileID: 11100000, guid: 014dd983c047b9e439e3151e0eee3133, type: 3}
       propertyPath: m_Animations.Array.data[1]
       value: 
-      objectReference: {fileID: 7400000, guid: 5fef46e3921c40d09a6af407d55f5898, type: 2}
+      objectReference: {fileID: 7400000, guid: 3de25446e34e4587995c5bcae96fc0db, type: 2}
     - target: {fileID: 11100000, guid: 014dd983c047b9e439e3151e0eee3133, type: 3}
       propertyPath: m_Animations.Array.data[2]
       value: 
       objectReference: {fileID: 7400000, guid: 5fef46e3921c40d09a6af407d55f5898, type: 2}
+    - target: {fileID: 11100000, guid: 014dd983c047b9e439e3151e0eee3133, type: 3}
+      propertyPath: m_PlayAutomatically
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 014dd983c047b9e439e3151e0eee3133, type: 3}
   m_RootGameObject: {fileID: 381574922}
@@ -6491,8 +6514,9 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 5fef46e3921c40d09a6af407d55f5898, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 5fef46e3921c40d09a6af407d55f5898, type: 2}
+  - {fileID: 7400000, guid: 3de25446e34e4587995c5bcae96fc0db, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 1
   m_UserAABB:
@@ -6520,6 +6544,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 1289997562, guid: 0c125e06fcc9d6948bd72a8324c9b145, type: 1}
   m_Name: 
+  SpeechVolumneThreshold: .300000012
 --- !u!82 &1792964344
 AudioSource:
   m_ObjectHideFlags: 0

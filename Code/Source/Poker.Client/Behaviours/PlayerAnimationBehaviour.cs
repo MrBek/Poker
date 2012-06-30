@@ -17,11 +17,26 @@ namespace Poker.Client.Behaviours
         public void Awake()
         {
             random = new System.Random(name.GetHashCode());
+            animation.Play("SittingIdle");
         }
 
-        public void TriggerSpeechAnimation()
+        public void StartSpeechAnimation(float delayInSeconds)
         {
             Debug.Log("Speech triggered");
+
+            if ( !animation.IsPlaying("SittingTalking"))
+            {
+                animation.Blend("SittingTalking");
+            }
+        }
+
+        public void StopSpeechAnimation()
+        {
+            if ( animation.IsPlaying("SittingTalking"))
+            {
+                animation.Stop("SittingTalking");
+                animation.Play("SittingIdle", AnimationPlayMode.Mix);
+            }
         }
 
         public void Update()

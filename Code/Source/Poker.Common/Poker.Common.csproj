@@ -36,6 +36,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conversion\ArrayConverters.cs" />
+    <Compile Include="Game\Card.cs" />
+    <Compile Include="Game\CardType.cs" />
     <Compile Include="Networking\INetworkMessage.cs" />
     <Compile Include="Networking\Messages\NetworkMessageBase.cs" />
     <Compile Include="Networking\Messages\PlayerAnnounceMessage.cs" />
@@ -44,6 +46,7 @@
     <Compile Include="Networking\NetworkMessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
