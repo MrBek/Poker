@@ -35,6 +35,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conversion\ArrayConverters.cs" />
     <Compile Include="Networking\INetworkMessage.cs" />
     <Compile Include="Networking\Messages\NetworkMessageBase.cs" />
     <Compile Include="Networking\Messages\PlayerAnnounceMessage.cs" />

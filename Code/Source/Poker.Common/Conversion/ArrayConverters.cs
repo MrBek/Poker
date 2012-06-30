@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Poker.Client.Conversion
+namespace Poker.Common.Conversion
 {
     public static class ArrayConverters
     {

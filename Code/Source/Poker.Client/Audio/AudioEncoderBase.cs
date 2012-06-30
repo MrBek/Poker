@@ -1,4 +1,4 @@
-﻿using Poker.Client.Conversion;
+﻿using Poker.Common.Conversion;
 
 namespace Poker.Client.Audio
 {

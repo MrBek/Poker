@@ -59,7 +59,6 @@
     <Compile Include="Behaviours\PlayerNetworkBehaviour.cs" />
     <Compile Include="Behaviours\PlayerVoiceInputBehaviour.cs" />
     <Compile Include="Behaviours\PlayerVoiceOutputBehaviour.cs" />
-    <Compile Include="Conversion\ArrayConverters.cs" />
     <Compile Include="Behaviours\PlayerNetworkBehaviourBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

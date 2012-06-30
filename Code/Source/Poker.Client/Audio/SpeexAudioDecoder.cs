@@ -1,6 +1,6 @@
 ﻿using System;
 using NSpeex;
-using Poker.Client.Conversion;
+using Poker.Common.Conversion;
 
 namespace Poker.Client.Audio
 {
