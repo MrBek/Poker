@@ -35,8 +35,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Networking\EventCodes.cs" />
-    <Compile Include="Networking\OperationCodes.cs" />
+    <Compile Include="Networking\INetworkMessage.cs" />
+    <Compile Include="Networking\Messages\NetworkMessageBase.cs" />
+    <Compile Include="Networking\Messages\PlayerAnnounceMessage.cs" />
+    <Compile Include="Networking\Messages\PlayerListMessage.cs" />
+    <Compile Include="Networking\Messages\VoiceDataMessage.cs" />
+    <Compile Include="Networking\NetworkMessageSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

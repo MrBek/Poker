@@ -59,7 +59,7 @@
     <Compile Include="Behaviours\PlayerNetworkBehaviour.cs" />
     <Compile Include="Behaviours\PlayerVoiceBehaviour.cs" />
     <Compile Include="Conversion\ArrayConverters.cs" />
-    <Compile Include="Networking\PhotonPeerExtensions.cs" />
+    <Compile Include="Networking\NetworkBehaviourBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
