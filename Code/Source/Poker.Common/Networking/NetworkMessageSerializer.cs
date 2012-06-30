@@ -73,6 +73,7 @@ namespace Poker.Common.Networking
         public NetworkMessageSerializer()
         {
             RegisterMessageType<PlayerAnnounceMessage>(10);
+            RegisterMessageType<PlayerListMessage>(11);
             RegisterMessageType<VoiceDataMessage>(100);
         }
     }

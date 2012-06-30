@@ -12,12 +12,10 @@ namespace Poker.Client.Behaviours
     public class PlayerVoiceInputBehaviour : MonoBehaviour
     {
         private readonly AudioInputRecorder recorder = new AudioInputRecorder(44100);
-        private IAudioEncoder               wavEncoder;
-        private IAudioEncoder               speexEncoder;
-        private Stream                      wavStream;
-        private Stream                      speexStream;
         private int                         sampleFrequency;
-
+        private IAudioEncoder               audioEncoder;
+        private Stream                      audioStream;
+      
         public void Awake()
         {
             StartCoroutine(InitializeMicrophone());
@@ -30,13 +28,7 @@ namespace Poker.Client.Behaviours
 
         public void OnDestroy()
         {
-            Debug.Log("Destroy");
-
-            wavEncoder.Close();
-            speexEncoder.Close();
-           
-            wavStream.Dispose();
-            speexStream.Dispose();
+            audioEncoder.Close();
         }
 
         private IEnumerator InitializeMicrophone()
@@ -56,39 +48,24 @@ namespace Poker.Client.Behaviours
 
                 sampleFrequency = recorder.Start(recorder.Devices.First(), (data,count) =>
                 {
-                    if ( wavEncoder == null )
+                    if ( audioEncoder == null )
                     {
-                        var wavData = CreateEncoder("test.wav", () => new WavAudioEncoder(), 1, sampleFrequency);
-                        var speexData = CreateEncoder("test.ogg", () => new SpeexAudioEncoder(true, BandMode.UltraWide, false, 10), 1, sampleFrequency);
+                        audioEncoder    = new SpeexAudioEncoder(false,BandMode.Wide,false,10);
+                        audioStream  = new EventStream((buffer,bufferOffset,bufferCount) =>
+                        {
+                            var playerNetworkBehaviour = GetComponent<PlayerNetworkBehaviour>(); 
+                            if ( playerNetworkBehaviour != null )
+                            {
+                                playerNetworkBehaviour.SendVoiceInput(buffer,bufferOffset,bufferCount,sampleFrequency);
+                            }
+                        });
 
-                        wavEncoder = wavData.Key;
-                        wavStream = wavData.Value;
-
-                        speexEncoder = speexData.Key;
-                        speexStream = speexData.Value;
+                        audioEncoder.Open(audioStream,1,sampleFrequency);
                     }
 
-                    wavEncoder.Write(data,count);
-                    speexEncoder.Write(data,count);
+                    audioEncoder.Write(data,count);
                 });
-
-                Debug.Log("Sample frequency: " + sampleFrequency);
             }
-        }
-
-        private KeyValuePair<IAudioEncoder,Stream>  CreateEncoder(string filename,Func<IAudioEncoder> creator,int channelCount,int sampleRate)
-        {
-            if ( File.Exists(filename))
-            {
-                File.Delete(filename);
-            }
-
-            var stream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write);
-            var encoder = creator();
-
-            encoder.Open(stream, channelCount, sampleRate);
-
-            return new KeyValuePair<IAudioEncoder, Stream>(encoder,stream);
         }
     }
 }

@@ -5,9 +5,9 @@ using Poker.Common.Networking;
 using Poker.Common.Networking.Messages;
 using UnityEngine;
 
-namespace Poker.Client.Networking
+namespace Poker.Client.Behaviours
 {
-    public abstract class NetworkBehaviourBase : MonoBehaviour,IPhotonPeerListener
+    public abstract class PlayerNetworkBehaviourBase : MonoBehaviour,IPhotonPeerListener
     {
         private PhotonPeer                                                  selfPeer;
         private string                                                      playerName;
@@ -15,6 +15,11 @@ namespace Poker.Client.Networking
         private readonly Dictionary<Type, Action<INetworkMessage,bool>>     messageHandlers = new Dictionary<Type, Action<INetworkMessage,bool>>();
         private readonly List<string>                                       allPlayerNames  = new List<string>(); 
         
+        public IEnumerable<string> AllPlayerNames
+        {
+            get { return allPlayerNames; }
+        }
+
         public void Update()
         {
             if ( selfPeer != null )
@@ -123,13 +128,32 @@ namespace Poker.Client.Networking
             }
         }
 
-        private void ReceivePlayerList(PlayerListMessage message)
+        protected TComponent FindPlayerByName<TComponent>(string playerName)
+            where TComponent : Component
         {
-            allPlayerNames.Clear();
-            allPlayerNames.AddRange(message.PlayerNames);
+            var index = allPlayerNames.IndexOf(playerName);
+            if (index >= 0)
+            {
+                var foundGameObject = GameObject.Find("Player0" + (index +1));
+
+                if (foundGameObject != null)
+                {  
+                    return foundGameObject.GetComponent<TComponent>();
+                }
+            }
+
+            return null;
         }
 
-        protected NetworkBehaviourBase()
+        private void ReceivePlayerList(PlayerListMessage message)
+        {
+            Debug.Log("Player list");
+            allPlayerNames.Clear();
+            allPlayerNames.AddRange(message.PlayerNames);
+            allPlayerNames.Sort();
+        }
+
+        protected PlayerNetworkBehaviourBase()
         {
             RegisterHandler<PlayerListMessage>(ReceivePlayerList);
         }

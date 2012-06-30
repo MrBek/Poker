@@ -16,6 +16,11 @@ namespace Poker.Client.Audio
 
         private Action<float[], int>    decodeCallback;
 
+        public int SampleRate
+        {
+            get { return decoder.SampleRate; }
+        }
+
         public void Open(Action<float[],int> decodeCallback)
         {
             this.decodeCallback = decodeCallback;

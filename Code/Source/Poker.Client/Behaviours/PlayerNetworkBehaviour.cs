@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ExitGames.Client.Photon;
-using Poker.Client.Networking;
 using Poker.Common.Networking;
 using Poker.Common.Networking.Messages;
 using UnityEngine;
 
 namespace Poker.Client.Behaviours
 {
-    public class PlayerNetworkBehaviour : NetworkBehaviourBase 
+    public class PlayerNetworkBehaviour : PlayerNetworkBehaviourBase 
     {
         private readonly string playerName = Guid.NewGuid().ToString();
     
@@ -17,26 +17,26 @@ namespace Poker.Client.Behaviours
             Connect("localhost:5055",playerName);
         }
 
-        public void SendVoiceInput(byte[] data,int offset,int count)
+        public void SendVoiceInput(byte[] data,int offset,int count,int sampleFrequency)
         {
             var sendBuffer = new byte[count];
             Buffer.BlockCopy(data,offset,sendBuffer,0,count);
-            SendToServer(new VoiceDataMessage() { Data = sendBuffer},false,1);
+            SendToServer(new VoiceDataMessage() { Data = sendBuffer,SampleFrequency = sampleFrequency},false,1);
         }
 
-        private void ReceiveVoiceOutput(VoiceDataMessage message)
+        private void ReceiveVoiceData(VoiceDataMessage message)
         {
-            var playerVoiceBehaviour = GetComponent<PlayerVoiceBehaviour>();
+            var playerVoiceBehaviour = FindPlayerByName<PlayerVoiceOutputBehaviour>(playerName);
 
             if ( playerVoiceBehaviour != null )
             {
-                playerVoiceBehaviour.PlayVoiceOutput(message.Data,message.Data.Length);
+                playerVoiceBehaviour.PlayVoiceOutput(message.Data,message.Data.Length,message.SampleFrequency);
             }
         }
 
         public PlayerNetworkBehaviour()
         {
-            RegisterHandler<VoiceDataMessage>(ReceiveVoiceOutput);
+            RegisterHandler<VoiceDataMessage>(ReceiveVoiceData);
         }
     }
 }

@@ -19,6 +19,11 @@ namespace Poker.Client.Behaviours
             random = new System.Random(name.GetHashCode());
         }
 
+        public void TriggerSpeechAnimation()
+        {
+            Debug.Log("Speech triggered");
+        }
+
         public void Update()
         {
             if ( !animation.isPlaying )
