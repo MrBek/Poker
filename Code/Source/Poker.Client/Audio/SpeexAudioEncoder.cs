@@ -53,20 +53,18 @@ namespace Poker.Client.Audio
 
         private void WriteCore(float[] samples,int count)
         {
-            if (shortBuffer == null || shortBuffer.Length < count)
+            if (shortBuffer == null || shortBuffer.Length < count * 10)
             {
-                shortBuffer = new short[count];
+                shortBuffer = new short[count * 10];
             }
 
-            if (byteBuffer == null || byteBuffer.Length < count * 2)
+            if (byteBuffer == null || byteBuffer.Length < count *  10)
             {
-                byteBuffer = new byte[count * 2];
+                byteBuffer = new byte[count * 10];
             }
 
             ArrayConverters.FloatToShort(samples,count,shortBuffer);
             var bytesEncoded = speexEncoder.Encode(shortBuffer, 0, count, byteBuffer, 0, byteBuffer.Length);
-
-            Debug.Log("Encoded: " + bytesEncoded);
 
             if ( encodeOgg )
             {

@@ -179,3 +179,6 @@ pip-log.txt
 /Poker/Assembly-CSharp.pidb
 /Poker/Assembly-CSharp-Editor.csproj
 /Poker/Assembly-CSharp-Editor.pidb
+/Software/Photon/log
+/Software/Photon/bin_Win64/log
+/Software/Photon/Poker/Cache
