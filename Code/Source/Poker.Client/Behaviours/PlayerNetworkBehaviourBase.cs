@@ -151,6 +151,21 @@ namespace Poker.Client.Behaviours
             allPlayerNames.Clear();
             allPlayerNames.AddRange(message.PlayerNames);
             allPlayerNames.Sort();
+
+            foreach( var playerName in allPlayerNames )
+            {
+                var playerObject = FindPlayerByName<PlayerVoiceOutputBehaviour>(playerName).gameObject;
+                
+                for( var i = 0; i < playerObject.transform.childCount; ++i )
+                {
+                    var labelObject = playerObject.transform.GetChild(i);
+
+                    if ( labelObject != null && labelObject.name == "Label")
+                    {
+                        labelObject.GetComponent<TextMesh>().text = playerName;
+                    }
+                }
+            }
         }
 
         protected PlayerNetworkBehaviourBase()
