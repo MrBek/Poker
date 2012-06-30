@@ -26,7 +26,7 @@ namespace Poker.Client.Behaviours
 
         public void Update()
         {
-            if ( !animation.isPlaying )
+            if ( !animation.IsPlaying("SittingIdle") )
             {
                 if (!isDelaying)
                 {
@@ -40,7 +40,7 @@ namespace Poker.Client.Behaviours
 
                     if ( currentDelay > delay )
                     {
-                        animation.Play();
+                        animation.Play("SittingIdle",AnimationPlayMode.Mix);
                         isDelaying = false;
                     }
                 }
