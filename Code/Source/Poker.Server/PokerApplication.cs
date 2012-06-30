@@ -6,6 +6,7 @@ using ExitGames.Logging;
 using ExitGames.Logging.Log4Net;
 using Photon.SocketServer;
 using Photon.SocketServer.Diagnostics;
+using Poker.Common.Networking;
 using log4net.Config;
 
 namespace Poker.Server
@@ -14,6 +15,14 @@ namespace Poker.Server
     {
         private static readonly ILogger     log         = LogManager.GetCurrentClassLogger();
         private readonly List<PokerPeer>    allPeers    = new List<PokerPeer>();
+
+        public void Broadcast(EventCodes eventCode,IEnumerable<KeyValuePair<byte,object>> parameters,Func<PokerPeer,bool> filter)
+        {
+            var eventData = new EventData((byte) eventCode, parameters.ToDictionary(kv => kv.Key, kv => kv.Value));
+            var sendParameters = new SendParameters() {Unreliable = false};
+
+            Broadcast(eventData,sendParameters,filter);
+        }
 
         public void Broadcast(EventData eventData,SendParameters sendParameters,Func<PokerPeer,bool> filter)
         {

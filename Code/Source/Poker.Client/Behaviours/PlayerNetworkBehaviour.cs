@@ -9,6 +9,7 @@ namespace Poker.Client.Behaviours
 {
     public class PlayerNetworkBehaviour : MonoBehaviour,IPhotonPeerListener
     {
+        private readonly Guid playerId = Guid.NewGuid();
         private readonly Dictionary<EventCodes,Action<EventData>> eventHandlers = new Dictionary<EventCodes, Action<EventData>>(); 
 
         private PhotonPeer peerSelf;
@@ -58,7 +59,10 @@ namespace Poker.Client.Behaviours
 
         public void OnStatusChanged(StatusCode statusCode)
         {
-          
+            if ( statusCode == StatusCode.Connect )
+            {
+                peerSelf.Send(OperationCodes.PlayerIntroduction,new []{new KeyValuePair<byte, object>(1,playerId.ToByteArray())},true);
+            }
         }
 
         public void OnDestroy()
@@ -82,6 +86,20 @@ namespace Poker.Client.Behaviours
             }
         }
 
+        private void ReceivePlayerAnnounce(EventData eventData)
+        {
+            var otherPlayerId = new Guid((byte[])eventData.Parameters[1]);
+
+            if ( otherPlayerId == playerId )
+            {
+                Debug.Log("Self login announce: " + otherPlayerId);
+            }
+            else
+            {
+                Debug.Log("Other player login announce: " + otherPlayerId);
+            }
+        }
+
         private void RegisterHandler(EventCodes eventCode,Action<EventData> handler)
         {
             eventHandlers.Add(eventCode,handler);
@@ -90,6 +108,7 @@ namespace Poker.Client.Behaviours
         public PlayerNetworkBehaviour()
         {
             RegisterHandler(EventCodes.VoiceOutput,ReceiveVoiceOutput);
+            RegisterHandler(EventCodes.PlayerAnnounce, ReceivePlayerAnnounce);
         }
     }
 }

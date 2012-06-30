@@ -13,6 +13,8 @@ namespace Poker.Server
         private readonly PokerApplication                                                   pokerApplication;
         private readonly Dictionary<OperationCodes,Action<OperationRequest,SendParameters>> operationHandlers   = new Dictionary<OperationCodes, Action<OperationRequest, SendParameters>>();
 
+        private Guid playerId;
+
         protected override void OnDisconnect(DisconnectReason reasonCode, string reasonDetail)
         {
             log.InfoFormat("Peer disconnected: {0}, {1}",reasonCode,reasonDetail);
@@ -31,11 +33,15 @@ namespace Poker.Server
 
         private void ReceiveVoiceInput(OperationRequest operationRequest,SendParameters sendParameters)
         {
-            var data                    = operationRequest.Parameters[1] as byte[];
-            var eventData               = new EventData((byte)EventCodes.VoiceOutput, new Dictionary<byte, object>() { { 1, operationRequest.Parameters[1] } });
-            var outputSendParameters    = new SendParameters() {Unreliable = true};
+            pokerApplication.Broadcast(EventCodes.VoiceOutput, new [] { new KeyValuePair<byte, object>(1,operationRequest.Parameters[1])},p => true);
+        }
 
-            pokerApplication.Broadcast(eventData,outputSendParameters,p => true);
+        private void ReceivePlayerIntroduction(OperationRequest operationRequest,SendParameters sendParameters)
+        {
+            playerId = new Guid((byte[])operationRequest.Parameters[1]);
+            log.InfoFormat("Player logged in: {0}",playerId);
+
+            pokerApplication.Broadcast(EventCodes.PlayerAnnounce, new [] { new KeyValuePair<byte, object>(1,playerId.ToByteArray()) },p => true);
         }
 
         private void RegisterHandler(OperationCodes operationCode,Action<OperationRequest,SendParameters> handler)
@@ -49,6 +55,7 @@ namespace Poker.Server
             this.pokerApplication = pokerApplication;
 
             RegisterHandler(OperationCodes.VoiceInput, ReceiveVoiceInput);
+            RegisterHandler(OperationCodes.PlayerIntroduction, ReceivePlayerIntroduction);
         }
     }
 }
