@@ -27,9 +27,9 @@ namespace Poker.Client.Behaviours
                             audio.clip = AudioClip.Create("VoiceOutput", decoderBuffer.Count, 1, sampleFrequency, true, false);
                             audio.clip.SetData(decoderBuffer.ToArray(), 0);
 
-                            var averageVolume = decoderBuffer.Average(b => b);
-                            Debug.Log("Volume: " + averageVolume);
-                            if (averageVolume > 0.4f)
+                            var maxVolume = decoderBuffer.Max(b => b);
+
+                            if (maxVolume > 0.3f)
                             {
                                 var playerAnimationBehaviour = GetComponent<PlayerAnimationBehaviour>();
                                 if (playerAnimationBehaviour != null)
